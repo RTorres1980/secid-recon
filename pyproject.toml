@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "secid-recon"
+version = "0.1.0"
+description = "Validate, convert and reconcile CUSIP, ISIN and SEDOL identifiers, with OpenFIGI mapping and a Kubernetes-ready API."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Robert Torres", email = "rob.a.torres@live.com" }]
+requires-python = ">=3.10"
+dependencies = ["httpx>=0.27"]
+keywords = ["fintech", "cusip", "isin", "sedol", "figi", "reconciliation", "kubernetes"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+[project.optional-dependencies]
+service = ["fastapi>=0.110", "uvicorn[standard]>=0.29"]
+dev = ["pytest>=8", "respx>=0.21", "ruff>=0.5", "fastapi>=0.110"]
+
+[project.urls]
+Homepage = "https://github.com/RTorres1980/secid-recon"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["*.md"]

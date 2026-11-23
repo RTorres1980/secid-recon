@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: secid-recon
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - hpa-pdb.yaml
+configMapGenerator:
+  - name: secid-recon-config
+    literals:
+      - SECID_MAX_BATCH=1000
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: secid-recon

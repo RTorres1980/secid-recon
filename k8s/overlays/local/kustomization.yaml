@@ -1,0 +1,27 @@
+# Local cluster (kind/minikube): one replica, locally built image.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+images:
+  - name: ghcr.io/rtorres1980/secid-recon
+    newName: secid-recon
+    newTag: dev
+patches:
+  - target:
+      kind: Deployment
+      name: secid-recon
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/template/spec/containers/0/imagePullPolicy
+        value: Never
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: secid-recon
+    patch: |-
+      - op: replace
+        path: /spec/minReplicas
+        value: 1
